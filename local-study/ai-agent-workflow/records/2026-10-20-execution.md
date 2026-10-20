@@ -81,4 +81,48 @@ for issue in issues:
 raise SystemExit(bool(issues))
 ```
 
-提交与远程同步证据在实际操作后追加，不提前声明成功。
+## 实际提交与远程证据
+
+暂存范围仅 `local-study/ai-agent-workflow/`。暂存后 `git diff --cached --check` 通过。
+教程提交新增 14 份 Markdown、1070 行；没有产品代码改动。
+
+```text
+commit: c0afef4cf34e912434f5525132508fd626326109
+subject: docs(study): add AI agent and workflow learning guide
+branch: study/ai-agent-workflow
+remote: origin = git@github.com:fengdi721/actual-chat.git
+```
+
+实际执行：
+
+```bash
+git add -- local-study/ai-agent-workflow
+git commit -m "docs(study): add AI agent and workflow learning guide"
+git push -u origin study/ai-agent-workflow
+git ls-remote origin refs/heads/study/ai-agent-workflow
+```
+
+推送成功并建立 `origin/study/ai-agent-workflow` 跟踪关系。第一次沙箱内远程核对遇到 DNS 错误，经工具批准在沙箱外重试后返回：
+
+```text
+c0afef4cf34e912434f5525132508fd626326109 refs/heads/study/ai-agent-workflow
+```
+
+该哈希与 `git rev-parse HEAD` 当时的返回值相同。
+本记录随后以独立文档提交同步，保留上述内容提交的可复核证据；不把记录自身尚未生成的哈希预先写入文件。
+对记录提交仍执行相同的远程哈希检查，最新哈希可用以下只读命令核对：
+
+```bash
+git rev-parse HEAD
+git ls-remote origin refs/heads/study/ai-agent-workflow
+git log -2 --oneline
+```
+
+## 交付摘要
+
+- 学习资料入口：`local-study/ai-agent-workflow/README.md`。
+- 包含完整计划、6 课教程、3 个渐进练习设计、参考答案、来源和执行记录。
+- 64 个本地链接、Markdown 代码块配对及教程提交的差异空白检查通过。
+- 只提交本轮学习目录；原有 `local-study/2026-10-20-session.md` 未修改、未暂存。
+- 未运行产品测试、未调用真实模型；教程练习仍是设计，不是已执行实现。
+- 没有推送 upstream、创建 PR、修改上游 issue 或发布团队消息。
